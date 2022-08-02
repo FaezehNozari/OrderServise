@@ -8,7 +8,6 @@ public class Order
     public int UserID { get; set; }
     public  StatesType State { get; private set; }
     public static List<OrderItems> OrderItem { get; set; }
-    public int V { get; }
     public OrderItems OrderItem1 { get; }
 
     public Order(int userID, List<OrderItems> orderItem)
@@ -16,12 +15,6 @@ public class Order
         UserID = userID;
         State = StatesType.Created;
         OrderItem = orderItem;
-    }
-
-    public Order(int v, OrderItems orderItem)
-    {
-        V = v;
-        OrderItem1 = orderItem;
     }
 
     public   void DeleteItem(OrderItems orderItem)

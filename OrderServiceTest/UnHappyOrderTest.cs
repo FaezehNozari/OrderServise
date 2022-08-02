@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using OrderServise.CustomExteption;
+using Xunit;
 
 namespace OrderServiceTest
 {
     public class UnHappyOrderTest
     {
-      
+        [Fact]
         public void Should_Throw_When_Want_To_Delete_Item_From_Empty_List()
         {
-            var list = new List<OrderItems>() is null;
-            var result = () => new Order(12,list);
+            var order = new Order(12, orderItem: null);
+            var result = () => order.DeleteItem(null);
 
             result.Should().Throw<DeleteItemExteption>();
+
         }
-
-
 
     }
 }
