@@ -15,7 +15,7 @@ public class OrderItems
     public static void CheckCount(int count)
     {
         if (count <= 0 || count > 3)
-            new OutOfRangeCountExteption();
+             throw new OutOfRangeCountExteption();
     }
 
 }

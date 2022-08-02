@@ -18,13 +18,12 @@ namespace OrderServiceTest
             Assert.Equal("Pincel", orderItem.Name);
         }
 
-
         [Theory]
         [InlineData(0)]
         [InlineData(4)]
         [InlineData(-5)]
-        public void Should_Input_Not_Be_Negative_Zero_And_More_Than_Three(int item)
-        {
+        public void Should_Input_Not_Be_Negative_Zero_And_More_Than_Three( int item)
+        { 
             var orderItem = () => new OrderItems(item, "Book");
             orderItem.Should().Throw<OutOfRangeCountExteption>();
         }

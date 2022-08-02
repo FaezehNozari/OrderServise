@@ -8,7 +8,6 @@ public class Order
     public int UserID { get; set; }
     public  StatesType State { get; private set; }
     public static List<OrderItems> OrderItem { get; set; }
-    public OrderItems OrderItem1 { get; }
 
     public Order(int userID, List<OrderItems> orderItem)
     {
@@ -17,7 +16,7 @@ public class Order
         OrderItem = orderItem;
     }
 
-    public   void DeleteItem(OrderItems orderItem)
+    public void DeleteItem(OrderItems orderItem)
     {
         if (OrderItem != null)
         {
@@ -30,7 +29,7 @@ public class Order
             new ListEmptyExteption();
     }
 
-    public  void AddItem(List<OrderItems> orderItem)
+    public void AddItem(List<OrderItems> orderItem)
     {
         if (State == StatesType.Created)
             OrderItem.AddRange(orderItem);
