@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OrderServise.CustomExteption
 {
-    public class OutOfRangeCountExteption : Exception
+    public class DeleteItemException : Exception
     {
-        public override string Message => " Order should not be negative, zero or more than 3";
+        public override string Message => "It is not possible to delete";
     }
 }

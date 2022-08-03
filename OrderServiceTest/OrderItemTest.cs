@@ -23,7 +23,7 @@ namespace OrderServiceTest
         { 
             var orderItem = () => new OrderItem(item, "Book");
 
-            orderItem.Should().Throw<OutOfRangeCountExteption>();
+            orderItem.Should().Throw<OutOfRangeCountException>();
         }
     } 
 }

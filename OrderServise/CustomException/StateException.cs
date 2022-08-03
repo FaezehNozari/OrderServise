@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderServise.CustomExteption
 {
-    public class StateExteption : Exception
+    public class StateException : Exception
     {
         public override string Message => "Change State ";
     }

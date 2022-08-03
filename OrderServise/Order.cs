@@ -31,7 +31,7 @@ namespace OrderService
 
             if (State != StatesType.Created)
             {
-                throw new DeleteItemExteption();
+                throw new DeleteItemException();
             }
 
             OrderItems.Remove(orderItem);
@@ -46,7 +46,7 @@ namespace OrderService
 
             if (State != StatesType.Created)
             {
-                throw new AddItemExteption();
+                throw new AddItemException();
             }
 
             OrderItems.Add(orderItem);
@@ -55,7 +55,7 @@ namespace OrderService
         public void Finalized()
         {
             if (State != StatesType.Created)
-                throw new StateExteption();
+                throw new StateException();
 
             State = StatesType.Finalized;
         }
@@ -63,7 +63,7 @@ namespace OrderService
         public void Shipped()
         {
             if (State != StatesType.Finalized || State != StatesType.Created)
-                throw new StateExteption();
+                throw new StateException();
 
             State = StatesType.Shipped;
         }

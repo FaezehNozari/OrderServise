@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderServise.CustomExteption
 {
-    public class AddItemExteption: Exception
+    public class AddItemException: Exception
     {
         public override string Message => "It is not possible to Add ";
     }

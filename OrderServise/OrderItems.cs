@@ -15,6 +15,6 @@ public class OrderItem
     {
         //Todo: Make custom exception
         if (count <= 0 || count > 3)
-             throw new OutOfRangeCountExteption();
+             throw new OutOfRangeCountException();
     }
 }
