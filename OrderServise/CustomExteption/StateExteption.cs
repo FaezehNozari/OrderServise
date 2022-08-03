@@ -9,6 +9,6 @@ namespace OrderServise.CustomExteption
 {
     public class StateExteption : Exception
     {
-       //public override string Message => ""
+        public override string Message => "Change State ";
     }
 }

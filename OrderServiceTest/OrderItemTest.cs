@@ -1,7 +1,4 @@
 using Xunit;
-using OrderServise;
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
 using OrderServise.CustomExteption;
 
@@ -12,22 +9,21 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItems_Should_Be_Created()
         {
-            var orderItem = new OrderItems(2, "Pincel");
+            var orderItem = new OrderItem(2, "Pencil");
 
             Assert.Equal(2, orderItem.Count);
-            Assert.Equal("Pincel", orderItem.Name);
+            Assert.Equal("Pencil", orderItem.Name);
         }
 
         [Theory]
         [InlineData(0)]
         [InlineData(4)]
         [InlineData(-5)]
-        public void Should_Input_Not_Be_Negative_Zero_And_More_Than_Three( int item)
+        public void OrderItem_Should_Throw_Exteption_When_Count_Is_Less_Than_Zero_Or_More_Than_Three(int item)
         { 
-            var orderItem = () => new OrderItems(item, "Book");
+            var orderItem = () => new OrderItem(item, "Book");
+
             orderItem.Should().Throw<OutOfRangeCountExteption>();
         }
-
-
     } 
 }

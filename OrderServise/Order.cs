@@ -1,55 +1,79 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using OrderService.CustomExteption;
+﻿using OrderService.CustomExteption;
 using OrderServise.CustomExteption;
 
-public class Order
+namespace OrderService
 {
-    public int UserID { get; set; }
-    public  StatesType State { get; private set; }
-    public static List<OrderItems> OrderItem { get; set; }
-
-    public Order(int userID, List<OrderItems> orderItem)
+    public class Order
     {
-        UserID = userID;
-        State = StatesType.Created;
-        OrderItem = orderItem;
-    }
-
-    public void DeleteItem(OrderItems orderItem)
-    {
-        if (OrderItem != null)
+        public int UserID { get; private set; }
+        public StatesType State { get; private set; }
+        public List<OrderItem> OrderItems { get; private set; }
+        List<OrderItem> orderItemList = new List<OrderItem>();
+        public Order(int userID, List<OrderItem> orderItemList)
         {
-            if (State == StatesType.Created)
-                OrderItem.Remove(orderItem);
-            if (State == StatesType.Finalized || State == StatesType.Shipped)
-                new DeleteItemExteption();
+            UserID = userID;
+            State = StatesType.Created;
+            this.orderItemList = orderItemList;
+            OrderItems = orderItemList;
         }
-        else
-            new ListEmptyExteption();
-    }
 
-    public void AddItem(List<OrderItems> orderItem)
-    {
-        if (State == StatesType.Created)
-            OrderItem.AddRange(orderItem);
-        if (State == StatesType.Finalized || State == StatesType.Shipped)
-            new AddItemExteption();
+        public void DeleteItem(OrderItem orderItem)
+        {
+            if (OrderItems.Count == 1)
+            {
+                throw new CantDeleteItemExteption();
+            }
 
-    }
-  
-    public void ChengeState(StatesType stateType)
-    {
-        if (stateType == StatesType.Created)
+            if (orderItem == null)
+            {
+                throw new NullOrderItemException();
+            }
+
+            if (State != StatesType.Created)
+            {
+                throw new DeleteItemExteption();
+            }
+
+            OrderItems.Remove(orderItem);
+        }
+
+        public void AddItem(OrderItem orderItem)
+        {
+            if (orderItem is null)
+            {
+                throw new NullOrderItemException();
+            }
+
+            if (State != StatesType.Created)
+            {
+                throw new AddItemExteption();
+            }
+
+            OrderItems.Add(orderItem);
+        }
+
+        public void Finalized()
+        {
+            if (State != StatesType.Created)
+                throw new StateExteption();
+
             State = StatesType.Finalized;
-        if (stateType == StatesType.Finalized)
+        }
+
+        public void Shipped()
+        {
+            if (State != StatesType.Finalized || State != StatesType.Created)
+                throw new StateExteption();
+
             State = StatesType.Shipped;
+        }
+    }
+
+
+    public enum StatesType
+    {
+        Created,
+        Finalized,
+        Shipped
     }
 }
-public enum StatesType
-{
-    Created,
-    Finalized,
-    Shipped
-}
-

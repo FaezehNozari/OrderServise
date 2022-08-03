@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using FluentAssertions;
 using OrderService;
-using FluentAssertions;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OrderServiceTest
 {
@@ -14,51 +10,63 @@ namespace OrderServiceTest
         [Fact]
         public void Should_Be_Created()
         {
-            var orderItem = new OrderItems(1 , "Keyboard");
-            var list = new List<OrderItems>();
-            list.Add(orderItem);
+            var orderItem = new OrderItem(1, "Keyboard");
+            var expectedOrderItems = new List<OrderItem>
+            {
+                orderItem
+            };
+            var order = new Order(12, expectedOrderItems);
 
-            var order = new Order(10, list);
-
-            order.Equals(order);
+            Assert.Equal(expectedOrderItems, order.OrderItems);
+            Assert.Equal(12, order.UserID);
         }
 
         [Fact]
-        public void OrderState_Should_Be_Created_When_Order_Created()
+        public void OrderState_Should_Be_Created_When_Order_Create()
         {
-            var orderItem = new OrderItems(2, "Manitor");
-            var list = new List<OrderItems>();
-            list.Add(orderItem);
+            var orderItem = new OrderItem(2, "Manitor");
+            var orderItems = new List<OrderItem>
+            {
+                orderItem
+            };
+            var order = new Order(10, orderItems);
 
-            var order = new Order(10, list);
             order.State.Should().Be(StatesType.Created);
-
         }
 
         [Fact]
-        public void Order_Deleted_When_State_Is_Created()
+        public void OrderItem_Should_Be_Deleted()
         {
-            var orderList = new List<OrderItems>();
-            var orderItem = new OrderItems(3 , "Mouse" );
-            orderList.Add(orderItem);
-            var orderItem1 = new OrderItems(4, "Speaker");
-            orderList.Add(orderItem1);
-            var order = new Order(12 , orderList);
+            var orderItem1 = new OrderItem(3, "Mouse");
+            var orderItem2 = new OrderItem(2, "Speaker");
+            var orderList = new List<OrderItem>
+            {
+                orderItem1,
+                orderItem2
+            };
+            var order = new Order(12, orderList);
 
-            order.DeleteItem(orderItem);
-            order.Equals(orderList);
+            order.DeleteItem(orderItem2);
+
+            Assert.Equal(orderList, order.OrderItems);
         }
 
         [Fact]
-        public void Order_Added_When_State_Is_Created()
+        public void OrderItem_Should_Be_Added()
         {
-            var orderItem = new OrderItems(5, "Microphone");
-            var list = new List<OrderItems>();
-            list.Add(orderItem);
-            var order = new Order(19, list);
+            var orderItem1 = new OrderItem(3, "Mouse");
+            var orderItem2 = new OrderItem(2, "Speaker");
+            List<OrderItem> orderItems = new()
+            {
+                orderItem1
+            };
+            List<OrderItem> expectedOrderItems = orderItems;
+            expectedOrderItems.Add(orderItem2);
+            var order = new Order(19, orderItems);
 
-            order.AddItem(list);
-            order.Equals(list);
+            order.AddItem(orderItem2);
+
+            Assert.Equal(expectedOrderItems, order.OrderItems);
         }
     }
 }

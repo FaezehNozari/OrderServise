@@ -1,21 +1,20 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using OrderServise.CustomExteption;
 
-using OrderServise.CustomExteption;
-
-public class OrderItems
+//Todo: Add namespace
+public class OrderItem
 {
     public int Count { get; set; }
     public string Name { get; set; }
-    public OrderItems(int count , string name)
+    public OrderItem(int count, string name)
     {
-        CheckCount(count);
+        EnsureCount(count);
         Count = count;  
         Name = name;
     }
-    public static void CheckCount(int count)
+    public static void EnsureCount(int count)
     {
+        //Todo: Make custom exception
         if (count <= 0 || count > 3)
              throw new OutOfRangeCountExteption();
     }
-
 }
