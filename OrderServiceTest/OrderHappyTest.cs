@@ -70,7 +70,7 @@ namespace OrderServiceTest
         }
 
         [Fact]
-        public void Order_State_Should_Change_To_Finalized_When_Calling_Finalized_Method()
+        public void OrderState_Should_Change_To_Finalized_When_Calling_Finalized_Method()
         {
             var orderItem = new OrderItem(3, "Mouse");
             List<OrderItem> orderItems = new List<OrderItem>
@@ -81,6 +81,20 @@ namespace OrderServiceTest
 
             order.Finalized();
             order.State.Should().Be(StatesType.Finalized);
+        }
+
+        [Fact]
+        public void OrderState_Should_Change_To_Shipped_When_Calling_Shipped_Methode()
+        {
+            var orderItem = new OrderItem(1, "CD");
+            List<OrderItem> orderItems = new List<OrderItem>
+            {
+                orderItem
+            };
+            var order = new Order(11, orderItems);
+
+            order.Shipped();
+            order.State.Should().Be(StatesType.Shipped);
         }
     }
 }

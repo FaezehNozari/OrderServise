@@ -62,7 +62,7 @@ namespace OrderService
 
         public void Shipped()
         {
-            if (State != StatesType.Finalized || State != StatesType.Created)
+            if (State != StatesType.Finalized && State != StatesType.Created)
                 throw new StateException();
 
             State = StatesType.Shipped;
