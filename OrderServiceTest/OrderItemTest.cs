@@ -1,6 +1,7 @@
 using Xunit;
 using FluentAssertions;
 using OrderServise.CustomExteption;
+using OrderService;
 
 namespace OrderServiceTest
 {

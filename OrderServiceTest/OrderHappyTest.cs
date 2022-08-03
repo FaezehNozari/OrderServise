@@ -68,5 +68,19 @@ namespace OrderServiceTest
 
             Assert.Equal(expectedOrderItems, order.OrderItems);
         }
+
+        [Fact]
+        public void Order_State_Should_Change_To_Finalized_When_Calling_Finalized_Method()
+        {
+            var orderItem = new OrderItem(3, "Mouse");
+            List<OrderItem> orderItems = new List<OrderItem>
+            {
+                orderItem
+            };
+            var order = new Order(10, orderItems);
+
+            order.Finalized();
+            order.State.Should().Be(StatesType.Finalized);
+        }
     }
 }

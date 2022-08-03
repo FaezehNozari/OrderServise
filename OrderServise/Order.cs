@@ -56,7 +56,7 @@ namespace OrderService
         {
             if (State != StatesType.Created)
                 throw new StateException();
-
+           
             State = StatesType.Finalized;
         }
 
