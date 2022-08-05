@@ -26,16 +26,18 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItem_Should_Throw_DeleteItemException_When_StateType_Not_Created()
         {
-            var orderItem = new OrderItem(1 , "Cpu");
+            var orderItem1 = new OrderItem(1 , "Cpu");
+            var orderItem2 = new OrderItem(1, "Cpu");
             List<OrderItem> orderItems = new List<OrderItem>
             {
-                orderItem
+                orderItem1,
+                orderItem2
             };
             var order = new Order(14, orderItems);
 
             order.Finalized();
-            order.Shipped();
-            var result = () => order.DeleteItem(orderItem);
+            var result = () => order.DeleteItem(orderItem1);
+
             result.Should().Throw<DeleteItemException>();
         }
         [Fact]
