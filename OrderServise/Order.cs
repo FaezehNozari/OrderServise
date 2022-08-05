@@ -9,12 +9,10 @@ namespace OrderService
         public int UserID { get; private set; }
         public StatesType State { get; private set; }
         public List<OrderItem> OrderItems { get; private set; }
-        List<OrderItem> orderItemList = new List<OrderItem>();
         public Order(int userID, List<OrderItem> orderItemList)
         {
             UserID = userID;
             State = StatesType.Created;
-            this.orderItemList = orderItemList;
             OrderItems = orderItemList;
         }
 
