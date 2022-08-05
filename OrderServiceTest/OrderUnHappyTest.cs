@@ -88,5 +88,15 @@ namespace OrderServiceTest
 
             result.Should().Throw<AddItemException>();
         }
+
+        [Fact]
+        public void OrderItem_Should_Throw_NullOrderItemException_When_Add_Null_To_OrderItem()
+        {
+            var order = new Order(2, null);
+
+            var addItem = () => order.AddItem(null);
+
+            addItem.Should().Throw<NullOrderItemException>();
+        }
     }
 }
