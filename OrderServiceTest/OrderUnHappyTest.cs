@@ -44,7 +44,7 @@ namespace OrderServiceTest
         }
 
         [Fact]
-        public void FinalizedMethod_Should_Throw_StateException_When_StateType_Is_Created()
+        public void FinalizedMethod_Should_Throw_StateException_When_StateType_Is_Shipped()
         {
             var orderItem = new OrderItem(3, "Mouse");
             List<OrderItem> orderItems = new List<OrderItem>
@@ -53,6 +53,8 @@ namespace OrderServiceTest
             };
             var order = new Order(10, orderItems);
 
+            order.Finalized();
+            order.Shipped();
             var finalized = () => order.Finalized();
 
             finalized.Should().Throw<StateException>();
