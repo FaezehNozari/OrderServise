@@ -93,7 +93,9 @@ namespace OrderServiceTest
             };
             var order = new Order(11, orderItems);
 
+            order.Finalized();
             order.Shipped();
+
             order.State.Should().Be(StatesType.Shipped);
         }
     }
