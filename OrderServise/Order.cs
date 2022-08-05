@@ -1,4 +1,5 @@
-﻿using OrderService.CustomExteption;
+﻿using OrderService.CustomException;
+using OrderService.CustomExteption;
 using OrderServise.CustomExteption;
 
 namespace OrderService
@@ -24,12 +25,7 @@ namespace OrderService
                 throw new CantDeleteItemExteption();
             }
 
-            if (orderItem == null)
-            {
-                throw new NullOrderItemException();
-            }
-
-            if (State != StatesType.Created)
+            if (State != StatesType.Created )
             {
                 throw new DeleteItemException();
             }
@@ -54,7 +50,7 @@ namespace OrderService
 
         public void Finalized()
         {
-            if (State != StatesType.Created)
+            if (State == StatesType.Created)
                 throw new StateException();
            
             State = StatesType.Finalized;

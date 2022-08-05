@@ -22,18 +22,34 @@ namespace OrderServiceTest
             var result = () => order.DeleteItem(orderItem);
             result.Should().Throw<CantDeleteItemExteption>();
         }
+       
         [Fact]
-        public void OrderItem_Should_Throw_NullOrderItemException_When_OrderItem_Is_Null()
+        public void OrderItem_Should_Throw_DeleteItemException_When_StateType_Not_Created()
         {
-            var orderItem = new OrderItem(2, null);
+            var orderItem = new OrderItem(1 , "Cpu");
             List<OrderItem> orderItems = new List<OrderItem>
             {
-               orderItem
+                orderItem
             };
-            var order = new Order(13 ,null);
+            var order = new Order(14, orderItems);
 
-            var result = () => order.DeleteItem(null); ; ;
-            result.Should().Throw<NullOrderItemException>();
+            order.Finalized();
+            order.Shipped();
+            var result = () => order.DeleteItem(orderItem);
+            result.Should().Throw<DeleteItemException>();
+        }
+        [Fact]
+        public void OrderState_Should_Throw_StateException_When_StateType_Is_Created()
+        {
+            var orderItem = new OrderItem(3, "Mouse");
+            List<OrderItem> orderItems = new List<OrderItem>
+            {
+                orderItem
+            };
+            var order = new Order(10, orderItems);
+
+            var finalized = () => order.Finalized();
+            finalized.Should().Throw<StateException>();
         }
     }
 }
