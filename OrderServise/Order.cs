@@ -50,7 +50,7 @@ namespace OrderService
 
         public void Finalized()
         {
-            if (State == StatesType.Shipped || State == StatesType.Created)
+            if (State == StatesType.Shipped )
                 throw new StateException();
            
                 State = StatesType.Finalized;
