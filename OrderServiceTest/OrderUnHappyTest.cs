@@ -2,6 +2,8 @@
 using OrderService;
 using OrderService.CustomException;
 using OrderService.CustomExteption;
+using OrderServiceTest.Bulider;
+using OrderServiceTest.Buliders;
 using OrderServise.CustomExteption;
 using System.Collections.Generic;
 using Xunit;
@@ -13,12 +15,11 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItem_Should_Throw_CantDeleteItemExteption_When_Count_Equal_One()
         {
-            var orderItem = new OrderItem(1, "Case");
-            List<OrderItem> orderItems = new List<OrderItem>
-            {
-                orderItem
-            };
-            var order = new Order(12, orderItems);
+            var orderItem = new OrderItemBuilder().Build();
+            var orderBuilder = new OrderBulider()
+                 .WithUserId(1)
+                 .WithOrderItem(orderItem);
+            var order = orderBuilder.Build();
 
             var result = () => order.DeleteItem(orderItem);
 
@@ -28,14 +29,17 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItem_Should_Throw_DeleteItemException_When_StateType_Not_Created()
         {
-            var orderItem1 = new OrderItem(1 , "Cpu");
-            var orderItem2 = new OrderItem(1, "Cpu");
+            var orderItem1 = new OrderItemBuilder().Build();
+            var orderItem2 = new OrderItemBuilder().WithCount(1).WithName("Case").Build();
+            var orderBuilder = new OrderBulider()
+                .WithUserId(1)
+                .WithOrderItem(orderItem1);
             List<OrderItem> orderItems = new List<OrderItem>
             {
-                orderItem1,
+                orderItem1 ,
                 orderItem2
             };
-            var order = new Order(14, orderItems);
+            var order = new OrderBulider().WithOrderItems(orderItems).Build();
 
             order.Finalized();
             var result = () => order.DeleteItem(orderItem1);
@@ -46,12 +50,7 @@ namespace OrderServiceTest
         [Fact]
         public void FinalizedMethod_Should_Throw_StateException_When_StateType_Is_Shipped()
         {
-            var orderItem = new OrderItem(3, "Mouse");
-            List<OrderItem> orderItems = new List<OrderItem>
-            {
-                orderItem
-            };
-            var order = new Order(10, orderItems);
+            var order = new OrderBulider().Build();
 
             order.Finalized();
             order.Shipped();
@@ -63,12 +62,7 @@ namespace OrderServiceTest
         [Fact]
         public void ShippedMethod_Should_Throw_StateException_When_OrderState_Is_Craeted()
         {
-            var orderItem = new OrderItem(3, "Mouse");
-            List<OrderItem> orderItems = new List<OrderItem>
-            {
-                orderItem
-            };
-            var order = new Order(10, orderItems);
+            var order = new OrderBulider().Build();
 
             var shipped = () => order.Shipped();
 
@@ -78,15 +72,14 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItem_Should_Throw_AddItemException_When_OrderState_Is_Not_Created()
         {
-            var orderItem1 = new OrderItem(1, "Cpu");
-            List<OrderItem> orderItems = new List<OrderItem>
-            {
-                orderItem1,
-            };
-            var order = new Order(14, orderItems);
+            var orderItem = new OrderItemBuilder().Build();
+            var orderBuilder = new OrderBulider()
+                .WithUserId(1)
+                .WithOrderItem(orderItem);
+            var order = orderBuilder.Build();
 
             order.Finalized();
-            var result = () => order.AddItem(orderItem1);
+            var result = () => order.AddItem(orderItem);
 
             result.Should().Throw<AddItemException>();
         }
@@ -94,11 +87,11 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItem_Should_Throw_NullOrderItemException_When_Add_Null_To_OrderItem()
         {
-            var order = new Order(2, null);
+            var orderBuilder = new OrderBulider().WithOrderItems(null);
 
-            var addItem = () => order.AddItem(null);
+            var order = () => orderBuilder.Build();
 
-            addItem.Should().Throw<NullOrderItemException>();
+            order.Should().Throw<NullOrderItemException>();
         }
     }
 }
