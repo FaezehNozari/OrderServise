@@ -2,6 +2,7 @@ using Xunit;
 using FluentAssertions;
 using OrderServise.CustomExteption;
 using OrderService;
+using OrderServiceTest.Buliders;
 
 namespace OrderServiceTest
 {
@@ -10,10 +11,14 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItems_Should_Be_Created()
         {
-            var orderItem = new OrderItem(2, "Pencil");
+            var orderItemBuilder = new OrderItemBuilder()
+                .WithCount(1)
+                .WithName("CD");
 
-            Assert.Equal(2, orderItem.Count);
-            Assert.Equal("Pencil", orderItem.Name);
+            var orderItem = orderItemBuilder.Build();
+
+            Assert.Equal(1, orderItem.Count);
+            Assert.Equal("CD", orderItem.Name);
         }
 
         [Theory]
