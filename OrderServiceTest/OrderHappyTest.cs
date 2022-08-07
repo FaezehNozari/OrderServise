@@ -46,9 +46,15 @@ namespace OrderServiceTest
             };
             var order = new Order(12, orderList);
 
+            List<OrderItem> expectedOrderItems = new()
+            {
+                orderItem1
+            };
+
+
             order.DeleteItem(orderItem2);
 
-            Assert.Equal(orderList, order.OrderItems);
+            order.OrderItems.Should().BeEquivalentTo(expectedOrderItems);
         }
 
         [Fact]

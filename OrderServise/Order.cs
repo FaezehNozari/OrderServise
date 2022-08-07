@@ -8,12 +8,12 @@ namespace OrderService
     {
         public int UserID { get; private set; }
         public StatesType State { get; private set; }
-        public List<OrderItem> OrderItems { get; private set; }
+        public List<OrderItem> OrderItems { get; private set; } = new ();
         public Order(int userID, List<OrderItem> orderItemList)
         {
             UserID = userID;
             State = StatesType.Created;
-            OrderItems = orderItemList;
+            OrderItems.AddRange(orderItemList);
         }
 
         public void DeleteItem(OrderItem orderItem)
