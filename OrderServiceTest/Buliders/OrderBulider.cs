@@ -12,7 +12,7 @@ namespace OrderServiceTest.Bulider
 
         public OrderBulider()
 		{
-			_userId = 12;
+			_userId = 1;
 			_orderItems.Add(orderItem);
 		}
 
