@@ -13,11 +13,10 @@ namespace OrderServiceTest
     public class OrderUnHappyTest
     {
         [Fact]
-        public void OrderItem_Should_Throw_CantDeleteItemExteption_When_Count_Equal_One()
+        public void Order_Should_Throw_CantDeleteItemExteption_When_OrderItems_Count_Equal_One()
         {
             var orderItem = new OrderItemBuilder().Build();
             var orderBuilder = new OrderBulider()
-                 .WithUserId(1)
                  .WithOrderItem(orderItem);
             var order = orderBuilder.Build();
 
@@ -27,7 +26,7 @@ namespace OrderServiceTest
         }
        
         [Fact]
-        public void OrderItem_Should_Throw_DeleteItemException_When_StateType_Not_Created()
+        public void Order_Should_Throw_DeleteItemException_When_StateType_Not_Created()
         {
             var orderItem1 = new OrderItemBuilder().Build();
             var orderItem2 = new OrderItemBuilder().WithCount(1).WithName("Case").Build();
@@ -70,7 +69,7 @@ namespace OrderServiceTest
         }
         
         [Fact]
-        public void OrderItem_Should_Throw_AddItemException_When_OrderState_Is_Not_Created()
+        public void Order_Should_Throw_AddItemException_When_OrderState_Is_Not_Created()
         {
             var orderItem = new OrderItemBuilder().Build();
             var orderBuilder = new OrderBulider()
@@ -85,7 +84,7 @@ namespace OrderServiceTest
         }
 
         [Fact]
-        public void OrderItem_Should_Throw_NullOrderItemException_When_Add_Null_To_OrderItem()
+        public void Order_Should_Throw_NullOrderItemException_When_Add_Null_To_OrderItem()
         {
             var orderBuilder = new OrderBulider().WithOrderItems(null);
 

@@ -28,11 +28,7 @@ namespace OrderServiceTest
         [Fact]
         public void OrderState_Should_Be_Created_When_Order_Create()
         {
-            var orderItem = new OrderItemBuilder().Build();
-            var orderBuilder = new OrderBulider()
-                .WithUserId(1)
-                .WithOrderItem(orderItem);
-            var order = orderBuilder.Build();
+            var order = new OrderBulider().Build();
 
             order.State.Should().Be(StatesType.Created);
         }
@@ -40,6 +36,7 @@ namespace OrderServiceTest
         [Fact]
         public void OrderItem_Should_Be_Deleted()
         {
+           
             var orderItem1 = new OrderItemBuilder().Build();
             var orderItem2 = new OrderItemBuilder().WithCount(1).WithName("Case").Build();
             var orderBuilder = new OrderBulider()
@@ -51,13 +48,13 @@ namespace OrderServiceTest
                 orderItem2
             };
             var order = new OrderBulider().WithOrderItems(orderItems).Build();
-
             List<OrderItem> expectedOrderItems = new()
             {
                 orderItem1
             };
-
+           
             order.DeleteItem(orderItem2);
+            
             order.OrderItems.Should().BeEquivalentTo(expectedOrderItems);
         }
 
@@ -65,8 +62,6 @@ namespace OrderServiceTest
         public void OrderItem_Should_Be_Added()
         {
             var orderItem = new OrderItemBuilder()
-                .WithCount(1)
-                .WithName("Speaker")
                 .Build();
             var order = new OrderBulider()
                 .WithOrderItem(orderItem)

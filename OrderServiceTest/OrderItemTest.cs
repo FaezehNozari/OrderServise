@@ -25,7 +25,7 @@ namespace OrderServiceTest
         [InlineData(0)]
         [InlineData(4)]
         [InlineData(-5)]
-        public void OrderItem_Should_Throw_Exteption_When_Count_Is_Less_Than_Zero_Or_More_Than_Three(int item)
+        public void OrderItem_Should_Throw_Exteption_When_Item_Is_Less_Than_Zero_Or_More_Than_Three(int item)
         { 
             var orderItem = () => new OrderItem(item, "Book");
 
