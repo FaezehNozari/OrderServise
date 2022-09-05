@@ -31,6 +31,10 @@ namespace OrderService
                 throw new OrderNotRegisteredException();
         }
 
+        public void ConfirmOrder()
+        {
+                _smsService.Send("Done!", "09368561354");
+        }
 
 
 

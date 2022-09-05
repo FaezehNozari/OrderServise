@@ -100,5 +100,16 @@ namespace OrderServiceTest
             var result = () => orderService.GetOrder(2);
             result.Should().Throw<OrderNotRegisteredException>();
         }
+
+        [Fact]
+        public void Order_Should_Send_Sms_When_Order_Is_Completed()
+        {
+            var smsServiceMock = Substitute.For<ISmsService>();
+            var orderService = new OrderServices(null, smsServiceMock);
+
+            orderService.ConfirmOrder();
+
+            smsServiceMock.Received().Send("Done!", "09368561354");
+        }
     }
 }
