@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NSubstitute;
 using OrderService;
 using OrderService.CustomException;
 using OrderService.CustomExteption;
@@ -87,6 +88,17 @@ namespace OrderServiceTest
             var order = () => orderBuilder.Build();
 
             order.Should().Throw<NullOrderItemException>();
+        }
+
+        [Fact]
+        public void Order_Should_Throw_OrderNotRegisteredException_When_OrderId_Not_Found()
+        {
+            var orderRepositoryStub = Substitute.For<IOrderRepository>();
+            orderRepositoryStub.GetById(2).Returns(x => null);
+            var orderService = new OrderServices(orderRepositoryStub , null);
+
+            var result = () => orderService.GetOrder(2);
+            result.Should().Throw<OrderNotRegisteredException>();
         }
     }
 }

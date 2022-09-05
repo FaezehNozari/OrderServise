@@ -6,9 +6,10 @@ namespace OrderService
 {
     public class Order
     {
+        
         public int UserID { get; private set; }
         public StatesType State { get; private set; }
-        public List<OrderItem> OrderItems { get; private set; } = new ();
+        public List<OrderItem> OrderItems { get; private set; } = new();
         public Order(int userID, List<OrderItem> orderItemList)
         {
             UserID = userID;
@@ -23,7 +24,7 @@ namespace OrderService
                 throw new CantDeleteItemExteption();
             }
 
-            if (State != StatesType.Created )
+            if (State != StatesType.Created)
             {
                 throw new DeleteItemException();
             }
@@ -50,19 +51,20 @@ namespace OrderService
         {
             if (State == StatesType.Shipped)
                 throw new StateException();
-           
-                State = StatesType.Finalized;
+
+            State = StatesType.Finalized;
         }
 
         public void Shipped()
         {
-            if ( State == StatesType.Created)
+            if (State == StatesType.Created)
                 throw new StateException();
 
             State = StatesType.Shipped;
         }
     }
 
+   
 
     public enum StatesType
     {
